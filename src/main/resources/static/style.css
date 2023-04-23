@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+.input {
+    cursor: pointer;
+    width: 70px;
+}
+
+body {
+    text-align: center;
+}
+
+input {
+    font-size: 1em;
+}
+
+input[type=submit] {
+    cursor: pointer;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
