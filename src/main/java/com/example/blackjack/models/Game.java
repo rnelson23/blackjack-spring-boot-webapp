@@ -9,7 +9,7 @@ import jakarta.persistence.OneToOne;
 public class Game {
 
     @Id
-    private Long id;
+    private long id;
     private int bet;
     private int money;
     private boolean ongoing;
@@ -42,8 +42,8 @@ public class Game {
         return id;
     }
 
-    public int getMoney() {
-        return money;
+    public String getMoney() {
+        return (money > 0 ? "$" : "-$") + Math.abs(money);
     }
 
     public Deck getDeck() {

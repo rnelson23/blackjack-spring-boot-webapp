@@ -3,7 +3,6 @@ package com.example.blackjack;
 import com.example.blackjack.models.Deck;
 import com.example.blackjack.models.Game;
 import com.example.blackjack.models.Hand;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,11 @@ import java.util.Random;
 @Controller
 public class BlackjackController {
 
-    @Autowired
-    private BlackjackRepository blackjackRepository;
+    private final BlackjackRepository repository;
+
+    public BlackjackController(BlackjackRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping("/deal")
     public String deal(@RequestParam int bet) {
@@ -37,33 +39,33 @@ public class BlackjackController {
             game.setMessage("Both have blackjack! Stand-off!");
         }
 
-        blackjackRepository.save(game);
+        repository.save(game);
         return "redirect:/" + game.getId() + "/game";
     }
 
     @GetMapping("/{id}/deal")
     public String dealAgain(@PathVariable long id, @RequestParam int bet) {
-        Game game = blackjackRepository.findById(id).orElseThrow().dealAgain(bet);
+        Game game = repository.findById(id).orElseThrow().dealAgain(bet);
 
-        blackjackRepository.save(game);
+        repository.save(game);
         return "redirect:/" + game.getId() + "/game";
     }
 
     @GetMapping("/{id}/game")
     public String game(@PathVariable long id, Model model) {
-        Game game = blackjackRepository.findById(id).orElseThrow();
+        Game game = repository.findById(id).orElseThrow();
 
         model.addAttribute("playerHand", game.getPlayerHand());
         model.addAttribute("dealerHand", game.getDealerHand());
         model.addAttribute("message", game.getMessage());
-        model.addAttribute("money", (game.getMoney() > 0 ? "$" : "-$") + Math.abs(game.getMoney()));
+        model.addAttribute("money", game.getMoney());
 
         return game.isOngoing() ? "game" : "end";
     }
 
     @GetMapping("/{id}/hit")
     public String hit(@PathVariable long id) {
-        Game game = blackjackRepository.findById(id).orElseThrow();
+        Game game = repository.findById(id).orElseThrow();
         game.getDeck().dealFaceUp(game.getPlayerHand());
 
         if (game.getPlayerHand().getValue() > 21) {
@@ -71,19 +73,19 @@ public class BlackjackController {
             game.loseBet();
         }
 
-        blackjackRepository.save(game);
+        repository.save(game);
         return "redirect:/" + game.getId() + "/game";
     }
 
     @GetMapping("/{id}/stand")
     public String stand(@PathVariable long id) {
-        Game game = blackjackRepository.findById(id).orElseThrow();
+        Game game = repository.findById(id).orElseThrow();
 
         Deck deck = game.getDeck();
         Hand dealerHand = game.getDealerHand();
         Hand playerHand = game.getPlayerHand();
 
-        dealerHand.flip();
+        dealerHand.flipLastCard();
 
         while (dealerHand.getValue() < 17) {
             deck.dealFaceUp(dealerHand);
@@ -106,7 +108,7 @@ public class BlackjackController {
             game.tieBet();
         }
 
-        blackjackRepository.save(game);
+        repository.save(game);
         return "redirect:/" + game.getId() + "/game";
     }
 }

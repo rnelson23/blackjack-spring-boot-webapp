@@ -11,7 +11,7 @@ public class Deck {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     @OneToMany(cascade = CascadeType.ALL)
     private final List<Card> cards;
 

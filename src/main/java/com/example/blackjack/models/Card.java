@@ -9,7 +9,7 @@ public class Card {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     private Rank rank;
     private boolean flipped;
     private String face;

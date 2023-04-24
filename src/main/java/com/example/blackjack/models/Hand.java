@@ -10,7 +10,7 @@ public class Hand {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
     @OneToMany(cascade = CascadeType.ALL)
     private final List<Card> cards;
 
@@ -18,7 +18,7 @@ public class Hand {
         cards = new ArrayList<>();
     }
 
-    public void flip() {
+    public void flipLastCard() {
         cards.get(cards.size() - 1).flip();
     }
 

@@ -9,15 +9,15 @@
     <h1>Blackjack</h1>
     <h2 th:text="'Dealer: ' + ${dealerHand.value}" />
     <div class="container">
-        <th:block th:each="card : ${dealerHand.cards}">
+        <div th:each="card : ${dealerHand.cards}">
             <pre><code th:text="${card}" /></pre>
-        </th:block>
+        </div>
     </div>
     <h2 th:text="'Player: ' + ${playerHand.value}" />
     <div class="container">
-        <th:block th:each="card : ${playerHand.cards}">
+        <div th:each="card : ${playerHand.cards}">
             <pre><code th:text="${card}" /></pre>
-        </th:block>
+        </div>
     </div>
     <br>
     <form method="get">
