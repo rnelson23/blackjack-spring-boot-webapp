@@ -1,7 +1,6 @@
 package com.example.blackjack.models;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +12,9 @@ public class Hand {
     @GeneratedValue
     private long id;
     @OneToMany(cascade = CascadeType.ALL)
-    private final List<Card> cards;
+    private final List<Card> cards = new ArrayList<>();
 
-    public Hand() {
-        cards = new ArrayList<>();
-    }
+    protected Hand() {}
 
     public void flipLastCard() {
         cards.get(cards.size() - 1).flip();

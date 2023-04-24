@@ -1,7 +1,6 @@
 package com.example.blackjack.models;
 
 import jakarta.persistence.*;
-
 import java.util.Random;
 
 @Entity
