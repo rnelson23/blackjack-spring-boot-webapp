@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Blackjack</title>
     <link rel="stylesheet" href="/style.css">
+    <script type="text/javascript" src="/script.js"></script>
 </head>
 <body>
     <h1>Blackjack</h1>
@@ -17,15 +18,15 @@
     </div>
     <th:block th:if="${ongoing}">
         <br><form method="post">
-            <input class="input" type="submit" value="Hit" th:formaction="'./' + ${id} + '/hit'">
-            <input class="input" type="submit" value="Stand" th:formaction="'./' + ${id} + '/stand'">
+            <input id="hit-button" class="input" type="submit" value="Hit" th:formaction="'./' + ${id} + '/hit'">
+            <input id="stand-button" class="input" type="submit" value="Stand" th:formaction="'./' + ${id} + '/stand'">
         </form>
     </th:block>
     <th:block th:unless="${ongoing}">
         <h2 th:text="${message}" />
         <p th:text="'Money: ' + ${money}" />
         <form th:action="'./' + ${id} + '/deal'" method="get">
-            <label><input type="number" name="bet" min="1" step=".01" placeholder="Bet"></label>
+            <label><input type="number" name="bet" min="1" step=".01" placeholder="Bet" autofocus></label>
             <input type="submit" value="Deal">
         </form>
     </th:block>
