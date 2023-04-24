@@ -9,20 +9,25 @@
     <h1>Blackjack</h1>
     <h2 th:text="'Dealer: ' + ${dealerHand.value}" />
     <div class="container">
-        <div th:each="card : ${dealerHand.cards}">
-            <pre><code th:text="${card}" /></pre>
-        </div>
+        <pre th:each="card : ${dealerHand.cards}"><code th:text="${card}" /></pre>
     </div>
     <h2 th:text="'Player: ' + ${playerHand.value}" />
     <div class="container">
-        <div th:each="card : ${playerHand.cards}">
-            <pre><code th:text="${card}" /></pre>
-        </div>
+        <pre th:each="card : ${playerHand.cards}"><code th:text="${card}" /></pre>
     </div>
-    <br>
-    <form method="get">
-        <input class="input" type="submit" value="Hit" formaction="./hit">
-        <input class="input" type="submit" value="Stand" formaction="./stand">
-    </form>
+    <div th:if="${ongoing}">
+        <br><form method="post">
+            <input class="input" type="submit" value="Hit" th:formaction="'./' + ${id} + '/hit'">
+            <input class="input" type="submit" value="Stand" th:formaction="'./' + ${id} + '/stand'">
+        </form>
+    </div>
+    <div th:unless="${ongoing}">
+        <h2 th:text="${message}" />
+        <p th:text="'Money: ' + ${money}" />
+        <form th:action="'./' + ${id} + '/deal'" method="get">
+            <label><input type="number" name="bet" min="1" step=".01" placeholder="Bet"></label>
+            <input type="submit" value="Deal">
+        </form>
+    </div>
 </body>
 </html>

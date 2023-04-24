@@ -1,10 +1,9 @@
 package com.example.blackjack.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "cards")
 public class Card {
 
     @Id

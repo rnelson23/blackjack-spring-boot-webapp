@@ -1,17 +1,17 @@
 package com.example.blackjack.models;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
+import java.util.Random;
 
 @Entity
+@Table(name = "games")
 public class Game {
 
     @Id
     private long id;
-    private int bet;
-    private int money;
+    private double bet;
+    private double money;
     private boolean ongoing;
     private String message;
     @OneToOne(cascade = CascadeType.ALL)
@@ -23,10 +23,10 @@ public class Game {
 
     protected Game() {}
 
-    public Game(Long id, int bet) {
-        this.id = id;
+    public Game(double bet) {
+        this.id = new Random().nextLong(Long.MAX_VALUE);
         this.bet = bet;
-        this.money = 0;
+        this.money = 0D;
         this.ongoing = true;
         this.deck = new Deck();
         this.playerHand = new Hand();
@@ -43,7 +43,7 @@ public class Game {
     }
 
     public String getMoney() {
-        return (money > 0 ? "$" : "-$") + Math.abs(money);
+        return (money >= 0 ? "$" : "-$") + String.format("%.2f", Math.abs(money));
     }
 
     public Deck getDeck() {
@@ -81,7 +81,7 @@ public class Game {
         ongoing = false;
     }
 
-    public void tieBet() {
+    public void tie() {
         ongoing = false;
     }
 
@@ -89,7 +89,7 @@ public class Game {
         return ongoing;
     }
 
-    public Game dealAgain(int bet) {
+    public Game dealAgain(double bet) {
         this.bet = bet;
         ongoing = true;
 
