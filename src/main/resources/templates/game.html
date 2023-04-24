@@ -15,19 +15,19 @@
     <div class="container">
         <pre th:each="card : ${playerHand.cards}"><code th:text="${card}" /></pre>
     </div>
-    <div th:if="${ongoing}">
+    <th:block th:if="${ongoing}">
         <br><form method="post">
             <input class="input" type="submit" value="Hit" th:formaction="'./' + ${id} + '/hit'">
             <input class="input" type="submit" value="Stand" th:formaction="'./' + ${id} + '/stand'">
         </form>
-    </div>
-    <div th:unless="${ongoing}">
+    </th:block>
+    <th:block th:unless="${ongoing}">
         <h2 th:text="${message}" />
         <p th:text="'Money: ' + ${money}" />
         <form th:action="'./' + ${id} + '/deal'" method="get">
             <label><input type="number" name="bet" min="1" step=".01" placeholder="Bet"></label>
             <input type="submit" value="Deal">
         </form>
-    </div>
+    </th:block>
 </body>
 </html>
