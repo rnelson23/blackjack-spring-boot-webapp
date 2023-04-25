@@ -1,9 +1,11 @@
 window.addEventListener('keypress', (event) => {
-    if (event.key === 'h') {
-        document.getElementById('hit-button').click();
-    }
+    switch (event.key) {
+        case 'h':
+            document.getElementById('hit-button').click();
+            break;
 
-    if (event.key === 's') {
-        document.getElementById('stand-button').click();
+        case 's':
+            document.getElementById('stand-button').click();
+            break;
     }
 });
